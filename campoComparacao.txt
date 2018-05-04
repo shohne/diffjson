@@ -3,7 +3,7 @@
 /listaProduto/nome
 /listaProduto/preco
 
-# removemos a lista de paises da comparacao
+# removemos a lista de paises para comparacao
 # /listaPais/nome
 
 

@@ -26,25 +26,31 @@ public class DiffJSON {
         String conteudoArquivoJsonRegraVersaoB = org.apache.commons.io.FileUtils.readFileToString(new File(nomeArquivoJsonRegraVersaoB));
         String conteudoArquivoCampoComparacao = org.apache.commons.io.FileUtils.readFileToString(new File(nomeArquivoCampoComparacao));
 
-        String vLinha[] = conteudoArquivoCampoComparacao.split("\\r?\\n");
+        JSONObject jsonDiffResult = new JSONObject();
+        diffObjs(conteudoArquivoCampoComparacao, conteudoArquivoJsonRegraVersaoA, conteudoArquivoJsonRegraVersaoB, jsonDiffResult);
+        System.out.print("\n" + jsonDiffResult.toString(4));
+    }
+
+    public static boolean diffObjs(String sListaChaveAComparar,  String sObjectA, String sObjectB, JSONObject jsonDiff) throws Exception {
         List<String> listaChaveAComparar = new ArrayList<String>();
-        for (int i=0; i<vLinha.length; i++) {
-            if (vLinha[i] == null) continue;
-            String s = vLinha[i].trim();
-            if (s.length() == 0) continue;
-            if (s.substring(0,1).equals("#")) continue;
-            listaChaveAComparar.add(s);
+        if (sListaChaveAComparar != null && sListaChaveAComparar.length() > 0) {
+            String vLinha[] = sListaChaveAComparar.split("\\r?\\n");
+            for (int i=0; i<vLinha.length; i++) {
+                if (vLinha[i] == null) continue;
+                String s = vLinha[i].trim();
+                if (s.length() == 0) continue;
+                if (s.substring(0,1).equals("#")) continue;
+                listaChaveAComparar.add(s);
+            }
         }
 
-        JSONObject objA = new JSONObject(conteudoArquivoJsonRegraVersaoA);
-        JSONObject objB = new JSONObject(conteudoArquivoJsonRegraVersaoB);
+        JSONObject objA = new JSONObject(sObjectA);
+        JSONObject objB = new JSONObject(sObjectB);
 
         List<String> arrayDiff = new ArrayList<String>();
 
         JSONObject jsonDiffResult = new JSONObject();
-        diffObjs(listaChaveAComparar, "", objA, objB, arrayDiff, jsonDiffResult);
-
-        System.out.print("\n" + jsonDiffResult.toString(4));
+        return diffObjs(listaChaveAComparar, "", objA, objB, arrayDiff, jsonDiff);
     }
 
     public static boolean diffObjs(List<String> listaChaveAComparar, String prefix, Object objA, Object objB, List<String> arrayDiff, JSONObject jsonDiff) throws Exception {
