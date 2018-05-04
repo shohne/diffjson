@@ -1,0 +1,22 @@
+{
+    "id": 1001,
+    "dataNascimento": {
+        "dia": 24,
+        "mes": 3,
+        "ano": 1973,
+        "hora": 17,
+        "minuto": 10
+    },    
+    "campo1": "valor1",
+    "campo2": "valor1",
+    "campo3": {
+        "id": 0,
+        "valor": "ABC"
+    },
+    "listaProduto": [
+        {"nome": "celular", "preco": 1000.0},
+        {"nome": "relogio", "preco": 999.0},
+        {"nome": "sapato"},
+        {"nome": "tenis", "preco": 1200.0}
+    ]
+}

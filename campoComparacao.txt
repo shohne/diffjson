@@ -1,0 +1,4 @@
+/dataNascimento
+/campo3/id
+/listaProduto/nome
+/listaProduto/preco
