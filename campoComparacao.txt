@@ -2,3 +2,8 @@
 /campo3/id
 /listaProduto/nome
 /listaProduto/preco
+
+# removemos a lista de paises da comparacao
+# /listaPais/nome
+
+

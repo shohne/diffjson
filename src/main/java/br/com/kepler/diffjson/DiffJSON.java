@@ -28,7 +28,13 @@ public class DiffJSON {
 
         String vLinha[] = conteudoArquivoCampoComparacao.split("\\r?\\n");
         List<String> listaChaveAComparar = new ArrayList<String>();
-        for (int i=0; i<vLinha.length; i++) listaChaveAComparar.add(vLinha[i]);
+        for (int i=0; i<vLinha.length; i++) {
+            if (vLinha[i] == null) continue;
+            String s = vLinha[i].trim();
+            if (s.length() == 0) continue;
+            if (s.substring(0,1).equals("#")) continue;
+            listaChaveAComparar.add(s);
+        }
 
         JSONObject objA = new JSONObject(conteudoArquivoJsonRegraVersaoA);
         JSONObject objB = new JSONObject(conteudoArquivoJsonRegraVersaoB);
@@ -108,7 +114,7 @@ public class DiffJSON {
                 else if (valueA instanceof JSONArray) {
                     JSONArray jsonDiffArrayContext = new JSONArray();
                     result &= diffArrays(listaChaveAComparar, newPrefix, (JSONArray) valueA, (JSONArray) valueB, arrayDiff, jsonDiffArrayContext);
-                    if ( !(new JSONArray()).similar(jsonDiffArrayContext) ) jsonDiff.put(key, jsonDiffArrayContext);
+                    if ( !(new JSONArray()).similar(jsonDiffArrayContext) && !contemSoOperacaoNone(jsonDiffArrayContext) ) jsonDiff.put(key, jsonDiffArrayContext);
                 }
             }
             return result;
@@ -150,15 +156,15 @@ public class DiffJSON {
 
         final int n = arrayA.size();
         final int m = arrayB.size();
-        final int[][] d = new int[m + 1][n + 1];
+        final double[][] d = new double[m + 1][n + 1];
         final Map<Point, Point> parentMap = new HashMap<>();
 
         for (int i = 1; i <= m; ++i) {
-            d[i][0] = i;
+            d[i][0] = (double)i;
         }
 
         for (int j = 1; j <= n; ++j) {
-            d[0][j] = j;
+            d[0][j] = (double)j;
         }
 
         for (int j = 1; j <= n; ++j) {
@@ -167,9 +173,9 @@ public class DiffJSON {
                 Object objA = arrayA.get(j - 1);
                 Object objB = arrayB.get(i - 1);
 
-                int delta = diffObjs(listaChaveAComparar, prefix, objA, objB, new ArrayList<String>(), new JSONObject()) ? 0 : 1;
+                double delta = diffObjs(listaChaveAComparar, prefix, objA, objB, new ArrayList<String>(), new JSONObject()) ? 0.0 : 1.0;
 
-                int tentativeDistance = d[i - 1][j] + 1;
+                double tentativeDistance = d[i - 1][j] + 1;
                 EditOperation editOperation = EditOperation.INSERT;
 
                 if (tentativeDistance > d[i][j - 1] + 1) {
@@ -290,6 +296,24 @@ public class DiffJSON {
         }        
 //        System.out.print("\n       false");
         return false;
+    }
+
+    public static boolean contemSoOperacaoNone(JSONArray jsonArray) {
+        if (jsonArray == null) return true;
+        if (jsonArray.length() == 0) return true;
+        for (int i=0; i<jsonArray.length(); i++) {
+            Object objAtIndex = jsonArray.get(i);
+            if (!(objAtIndex instanceof JSONObject)) return false;
+            JSONObject jsonObjectAtIndex = (JSONObject) objAtIndex;
+            if (!jsonObjectAtIndex.has("operation")) return false;
+            Object operationValue = jsonObjectAtIndex.get("operation");
+            if (operationValue == null) return false;
+            if (!(operationValue instanceof String)) return false;
+            String sOperationValue = (String) operationValue;
+            if (sOperationValue == null) return false;
+            if (!sOperationValue.equals(EditOperation.NONE.toString())) return false;
+        }
+        return true;
     }
 
     public static boolean isSingleValueObject(Object object) {

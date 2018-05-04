@@ -1,4 +1,12 @@
 {
+    "listaPais": [
+        "Argentina",
+        "Bolivia",
+        "Brasil",
+        "Colombia",
+        "Peru",
+        "Uruguai"
+    ],
     "id": 1001,
     "dataNascimento": {
         "dia": 24,

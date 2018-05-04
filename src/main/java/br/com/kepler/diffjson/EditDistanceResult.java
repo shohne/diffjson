@@ -6,19 +6,19 @@ import java.util.Map;
 
 public class EditDistanceResult {
 
-    private int distance;
+    private double distance;
     private Object editSequence;
     private Object topAlignmentRow;
     private Object bottomAlignmentRow;
 
-    EditDistanceResult(int distance, Object editSequence, Object topAlignmentRow, Object bottomAlignmentRow) {
+    EditDistanceResult(double distance, Object editSequence, Object topAlignmentRow, Object bottomAlignmentRow) {
         this.distance           = distance;
         this.editSequence       = editSequence;
         this.topAlignmentRow    = topAlignmentRow;
         this.bottomAlignmentRow = bottomAlignmentRow;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
