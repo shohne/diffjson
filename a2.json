@@ -1,30 +1,83 @@
 {
-    "id": 1001,
+    "id": 2002,
     "dataNascimento": {
         "dia": 24,
         "mes": 3,
-        "ano": 1973,
-        "hora": 17,
-        "minuto": 10
-    },    
-    "campo1": "valor1",
+        "ano": 1972
+    },
+    "campo1": "valor11111",
     "campo2": "valor1",
     "campo3": {
-        "id": 0,
-        "valor": "ABC"
+        "id": 0
     },
     "listaProduto": [
         {"nome": "celular", "preco": 1000.0},
-        {"nome": "relogio", "preco": 999.0},
-        {"nome": "sapato"},
-        {"nome": "tenis", "preco": 1200.0}
+        {"nome": "computador", "preco": 50.0},
+        {"nome": "tenis", "preco": 1200.0},
+        {"nome": "relogio", "preco": 200.0},
+        {"nome": "camisa"}
     ],
-    "listaPais": [
-        "Argentina",
-        "Bolivia",
-        "Brasil",
-        "Colombia",
-        "Peru",
-        "Uruguai"
+      "listaPais": [
+        {
+            "nome": "Brasil",
+            "PIB": 4800,
+            "capital": {
+                "nome": "Brasília",
+                "longitude":  21.321111,
+                "latitude": -47.22311
+
+            }
+        },
+        {
+            "nome": "Colombia",
+            "PIB": 570,
+            "capital": {
+                "nome": "Bogotá",
+                "longitude":  19.321111,
+                "latitude": -48.00311
+
+            }
+        },
+        {
+            "nome": "Venezuela",
+            "PIB": 309,
+            "capital": {
+                "nome": "Caracas",
+                "longitude":  27.328711,
+                "latitude": -46.22311
+
+            }
+        },
+
+        {
+            "nome": "Bolívia",
+            "PIB": 100,
+            "capital": {
+                "nome": "La Paz",
+                "longitude":  24.7111,
+                "latitude": -44.211
+
+            }
+        },
+        {
+            "nome": "Argentina",
+            "PIB": 970,
+            "capital": {
+                "nome": "Buenos Airers",
+                "longitude":  23.321111,
+                "latitude": -46.22311
+
+            }
+        },
+        {
+            "nome": "Uruguai",
+            "PIB": 378,
+            "capital": {
+                "nome": "Montevidéu",
+                "longitude":  20.321111,
+                "latitude": -51.22311
+
+            }
+        }
     ]
 }

@@ -1,9 +1,20 @@
+
+[comparacao]
 /dataNascimento
 /campo3/id
 /listaProduto/nome
 /listaProduto/preco
+/listaPais/nome
+/listaPais/PIB
+/id
 
-# removemos a lista de paises para comparacao
-# /listaPais/nome
+[ordenacao]
+/listaPais /nome
+/listaProduto /nome
+
+[identificacaoElementoLista]
+/listaPais /nome
+/listaProduto /nome
+
 
 

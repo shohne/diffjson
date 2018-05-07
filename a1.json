@@ -1,11 +1,67 @@
 {
    "listaPais": [
-        "Argentina",
-        "Bolivia",
-        "Brasil",
-        "Colombia",
-        "Uruguai",
-        "Venezuela"
+        {
+            "nome": "Brasil",
+            "PIB": 4800,
+            "capital": {
+                "nome": "Brasília",
+                "longitude":  21.321111,
+                "latitude": -47.22311
+
+            }
+        },
+        {
+            "nome": "Colombia",
+            "PIB": 570,
+            "capital": {
+                "nome": "Bogotá",
+                "longitude":  19.321111,
+                "latitude": -48.00311
+
+            }
+        },
+        {
+            "nome": "Venezuela",
+            "PIB": 309,
+            "capital": {
+                "nome": "Caracas",
+                "longitude":  27.328711,
+                "latitude": -46.22311
+
+            }
+        },
+
+        {
+            "nome": "Bolívia",
+            "PIB": 100,
+            "capital": {
+                "nome": "La Paz",
+                "longitude":  24.7111,
+                "latitude": -44.211
+
+            }
+        },
+        
+                {
+            "nome": "Argentina",
+            "PIB": 870,
+            "capital": {
+                "nome": "Buenos Airers",
+                "longitude":  23.321111,
+                "latitude": -46.22311
+
+            }
+        },
+        {
+            "nome": "Uruguai",
+            "PIB": 378,
+            "capital": {
+                "nome": "Montevidéu",
+                "longitude":  20.321111,
+                "latitude": -51.22311
+
+            }
+        }
     ],    
     "id": 2001,
     "dataNascimento": {
@@ -23,5 +79,5 @@
         {"nome": "relogio", "preco": 200.0},
         {"nome": "tenis", "preco": 1200.0},
         {"nome": "camisa"}
-    ]
+    ],
 }
