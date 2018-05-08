@@ -27,17 +27,19 @@ public class DiffJSON {
 
         JSONObject jsonDiffResult = new JSONObject();
         diffObjs(conteudoArquivoConfiguracao, conteudoArquivoJsonRegraVersaoA, conteudoArquivoJsonRegraVersaoB, jsonDiffResult);
-        System.out.print("\n" + jsonDiffResult.toString(4));
+ //       System.out.print("\n" + jsonDiffResult.toString(4));
     }
 
     public static boolean diffObjs(String conteudoArquivoConfiguracao,  String sObjectA, String sObjectB, JSONObject jsonDiff) throws Exception {
-
         ConfiguracaoComparacao configuracaoComparacao = ConfiguracaoComparacao.buildFromString(conteudoArquivoConfiguracao);
+        JSONObject objA = (JSONObject) orderLists(configuracaoComparacao, "", new JSONObject(sObjectA));
+        JSONObject objB = (JSONObject) orderLists(configuracaoComparacao, "", new JSONObject(sObjectB));
+  //      JSONObject objB = new JSONObject(sObjectB);
 
-        JSONObject objA = new JSONObject(sObjectA);
-        JSONObject objB = new JSONObject(sObjectB);
+        System.out.print("\n" + objA.toString(4));
+  //      System.out.print("\n" + objB.toString(4));
 
-        JSONObject jsonDiffResult = new JSONObject();
+
         return diffObjs(configuracaoComparacao, "", objA, objB, jsonDiff);
     }
 
@@ -348,5 +350,53 @@ public class DiffJSON {
         }
         return false;
     }
+
+    public static Object orderLists(ConfiguracaoComparacao configuracaoComparacao, String prefix, Object obj) {
+        if (isSingleValueObject(obj)) return obj;
+
+        if (obj instanceof JSONArray) {
+            JSONArray jsonArray = (JSONArray) obj;
+            JSONArray result = new JSONArray();
+            String campoOrdenacao = getCampoOrdenacaoParaPrexifo(configuracaoComparacao, prefix);
+            HashMap<Object, Integer>  mapCampoOrdenacaoXPosicaoLista= new HashMap<Object,Integer>();
+            for (int i=0; i<jsonArray.length(); i++) {
+                mapCampoOrdenacaoXPosicaoLista.put( ((JSONObject)jsonArray.get(i)).get(campoOrdenacao), new Integer(i));
+            }
+
+            List<Object> listaCampoOrdenacao =  new ArrayList<Object>(mapCampoOrdenacaoXPosicaoLista.keySet());
+            Collections.sort(
+                listaCampoOrdenacao, 
+                new Comparator<Object>() {
+                    public int compare(Object o1, Object o2) {
+                        return ((String)o1).compareTo((String)o2);
+                    }
+                }
+            );
+            for (int i=0; i<listaCampoOrdenacao.size(); i++) {
+                result.put(orderLists(configuracaoComparacao, prefix, jsonArray.get(mapCampoOrdenacaoXPosicaoLista.get(listaCampoOrdenacao.get(i)))));
+            }
+
+            return result;
+        }
+        
+        JSONObject jsonObj = (JSONObject)obj;
+        JSONObject result = new JSONObject();
+        for (String key : jsonObj.keySet()) {
+            result.put(key, orderLists(configuracaoComparacao, prefix + "/" + key, jsonObj.get(key)));
+        }
+        return result;
+    }
+
+    public static String getCampoOrdenacaoParaPrexifo(ConfiguracaoComparacao configuracaoComparacao, String prefix) {
+        for (int i=0; i<configuracaoComparacao.ordenacao.size(); i++) {
+            if (prefix.equals(configuracaoComparacao.ordenacao.get(i).get(0))) {
+                String r = configuracaoComparacao.ordenacao.get(i).get(1);
+                if (r != null && r.length() > 1 && r.startsWith("/")) return r.substring(1);
+                return r;
+            }
+        }
+        return null;
+    }
+
 
 }

@@ -1,6 +1,15 @@
 {
    "listaPais": [
         {
+            "nome": "Venezuela",
+            "PIB": 309,
+            "capital": {
+                "nome": "Caracas",
+                "longitude":  27.328711,
+                "latitude": -46.22311
+            }
+        },
+        {
             "nome": "Brasil",
             "PIB": 4800,
             "capital": {
@@ -20,17 +29,6 @@
 
             }
         },
-        {
-            "nome": "Venezuela",
-            "PIB": 309,
-            "capital": {
-                "nome": "Caracas",
-                "longitude":  27.328711,
-                "latitude": -46.22311
-
-            }
-        },
-
         {
             "nome": "Bolívia",
             "PIB": 100,
@@ -75,9 +73,9 @@
         "id": 0
     },
     "listaProduto": [
-        {"nome": "celular", "preco": 1000.0},
         {"nome": "relogio", "preco": 200.0},
-        {"nome": "tenis", "preco": 1200.0},
-        {"nome": "camisa"}
+        {"nome": "celular", "preco": 1000.0},
+        {"nome": "camisa"},
+        {"nome": "tenis", "preco": 1200.0}
     ],
 }
