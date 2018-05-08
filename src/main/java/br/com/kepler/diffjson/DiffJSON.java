@@ -33,9 +33,6 @@ public class DiffJSON {
     public static boolean diffObjs(String conteudoArquivoConfiguracao,  String sObjectA, String sObjectB, JSONObject jsonDiff) throws Exception {
         ConfiguracaoComparacao configuracaoComparacao = ConfiguracaoComparacao.buildFromString(conteudoArquivoConfiguracao);
         JSONObject objA = (JSONObject) orderLists(configuracaoComparacao, "", new JSONObject(sObjectA));
-
-//        System.out.print("\n\n" + objA.toString(4));
-
         JSONObject objB = (JSONObject) orderLists(configuracaoComparacao, "", new JSONObject(sObjectB));
         return diffObjs(configuracaoComparacao, "", objA, objB, jsonDiff);
     }
@@ -412,12 +409,10 @@ public class DiffJSON {
        List<Object> result = new ArrayList<Object>();        
        for (int i=0; i<listaCampoOrdenacao.size(); i++) {
             String sPathCampo = listaCampoOrdenacao.get(i);
-//            System.out.print("\nsPathCampo: " + sPathCampo);
             String pathCampo[] = sPathCampo.split("/");
             Object js = jsonObj;
             for (int j=1; j<pathCampo.length; j++) {
                 String campo = pathCampo[j];
-//                System.out.print("\n campo: " + campo);
                 js = ((JSONObject)js).get(campo);
             }
             result.add(js);
