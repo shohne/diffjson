@@ -27,19 +27,16 @@ public class DiffJSON {
 
         JSONObject jsonDiffResult = new JSONObject();
         diffObjs(conteudoArquivoConfiguracao, conteudoArquivoJsonRegraVersaoA, conteudoArquivoJsonRegraVersaoB, jsonDiffResult);
- //       System.out.print("\n" + jsonDiffResult.toString(4));
+        System.out.print("\n" + jsonDiffResult.toString(4));
     }
 
     public static boolean diffObjs(String conteudoArquivoConfiguracao,  String sObjectA, String sObjectB, JSONObject jsonDiff) throws Exception {
         ConfiguracaoComparacao configuracaoComparacao = ConfiguracaoComparacao.buildFromString(conteudoArquivoConfiguracao);
         JSONObject objA = (JSONObject) orderLists(configuracaoComparacao, "", new JSONObject(sObjectA));
+
+//        System.out.print("\n\n" + objA.toString(4));
+
         JSONObject objB = (JSONObject) orderLists(configuracaoComparacao, "", new JSONObject(sObjectB));
-  //      JSONObject objB = new JSONObject(sObjectB);
-
-        System.out.print("\n" + objA.toString(4));
-  //      System.out.print("\n" + objB.toString(4));
-
-
         return diffObjs(configuracaoComparacao, "", objA, objB, jsonDiff);
     }
 
@@ -357,26 +354,25 @@ public class DiffJSON {
         if (obj instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) obj;
             JSONArray result = new JSONArray();
-            String campoOrdenacao = getCampoOrdenacaoParaPrexifo(configuracaoComparacao, prefix);
-            HashMap<Object, Integer>  mapCampoOrdenacaoXPosicaoLista= new HashMap<Object,Integer>();
-            for (int i=0; i<jsonArray.length(); i++) {
-                mapCampoOrdenacaoXPosicaoLista.put( ((JSONObject)jsonArray.get(i)).get(campoOrdenacao), new Integer(i));
-            }
-
-            List<Object> listaCampoOrdenacao =  new ArrayList<Object>(mapCampoOrdenacaoXPosicaoLista.keySet());
-            Collections.sort(
-                listaCampoOrdenacao, 
-                new Comparator<Object>() {
-                    public int compare(Object o1, Object o2) {
-                        return ((String)o1).compareTo((String)o2);
-                    }
+            List<String> listaCampoOrdenacao = getListaCampoOrdenacaoParaPrexifo(configuracaoComparacao, prefix);
+            if (listaCampoOrdenacao != null) {
+                HashMap<Object, Integer>  mapListaCampoOrdenacaoXPosicaoLista= new HashMap<Object,Integer>();
+                for (int i=0; i<jsonArray.length(); i++) {
+                    List<Object> valorCampoOrdenacao = getValorCampoOrdenacao((JSONObject)jsonArray.get(i), listaCampoOrdenacao);
+                    mapListaCampoOrdenacaoXPosicaoLista.put(valorCampoOrdenacao, new Integer(i));
                 }
-            );
-            for (int i=0; i<listaCampoOrdenacao.size(); i++) {
-                result.put(orderLists(configuracaoComparacao, prefix, jsonArray.get(mapCampoOrdenacaoXPosicaoLista.get(listaCampoOrdenacao.get(i)))));
-            }
 
-            return result;
+                List<Object> listaValorCampoOrdenacao =  new ArrayList<Object>(mapListaCampoOrdenacaoXPosicaoLista.keySet());
+                Collections.sort(
+                    listaValorCampoOrdenacao, 
+                    new DiffJSONComparator()
+                );
+                for (int i=0; i<listaValorCampoOrdenacao.size(); i++) {
+                    result.put(orderLists(configuracaoComparacao, prefix, jsonArray.get(mapListaCampoOrdenacaoXPosicaoLista.get(listaValorCampoOrdenacao.get(i)))));
+                }
+                return result;
+            }
+            return obj;
         }
         
         JSONObject jsonObj = (JSONObject)obj;
@@ -387,16 +383,30 @@ public class DiffJSON {
         return result;
     }
 
-    public static String getCampoOrdenacaoParaPrexifo(ConfiguracaoComparacao configuracaoComparacao, String prefix) {
+    public static List<String> getListaCampoOrdenacaoParaPrexifo(ConfiguracaoComparacao configuracaoComparacao, String prefix) {
         for (int i=0; i<configuracaoComparacao.ordenacao.size(); i++) {
             if (prefix.equals(configuracaoComparacao.ordenacao.get(i).get(0))) {
-                String r = configuracaoComparacao.ordenacao.get(i).get(1);
-                if (r != null && r.length() > 1 && r.startsWith("/")) return r.substring(1);
-                return r;
+                return configuracaoComparacao.ordenacao.get(i).subList(1, configuracaoComparacao.ordenacao.get(i).size());
             }
         }
         return null;
     }
 
+   public static List<Object> getValorCampoOrdenacao(JSONObject jsonObj, List<String> listaCampoOrdenacao) {
+       List<Object> result = new ArrayList<Object>();        
+       for (int i=0; i<listaCampoOrdenacao.size(); i++) {
+            String sPathCampo = listaCampoOrdenacao.get(i);
+//            System.out.print("\nsPathCampo: " + sPathCampo);
+            String pathCampo[] = sPathCampo.split("/");
+            Object js = jsonObj;
+            for (int j=1; j<pathCampo.length; j++) {
+                String campo = pathCampo[j];
+//                System.out.print("\n campo: " + campo);
+                js = ((JSONObject)js).get(campo);
+            }
+            result.add(js);
+       }
+       return result;
+    }
 
 }

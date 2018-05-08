@@ -13,7 +13,7 @@
             "nome": "Brasil",
             "PIB": 4800,
             "capital": {
-                "nome": "Brasília",
+                "nome": "Brasilia",
                 "longitude":  21.321111,
                 "latitude": -47.22311
 
@@ -73,9 +73,41 @@
         "id": 0
     },
     "listaProduto": [
-        {"nome": "relogio", "preco": 200.0},
-        {"nome": "celular", "preco": 1000.0},
-        {"nome": "camisa"},
-        {"nome": "tenis", "preco": 1200.0}
+        {
+            "nome": "relogio", 
+            "preco": {
+                "varejo": 300.0,
+                "fob": 130.0,
+                "cif": 155.0,
+                "atacado": 200.0
+            }
+        },
+        {
+            "nome": "celular", 
+            "preco": {
+                "varejo": 1300.0,
+                "fob": 1130.0,
+                "cif": 1205.0,
+                "atacado": 1250.0
+            }
+        },
+        {
+            "nome": "camisa",  
+            "preco": {
+                "varejo": 100.0,
+                "fob": 30.0,
+                "cif": 55.0,
+                "atacado": 80.0
+            }
+        },
+        {
+            "nome": "celular", 
+            "preco": {
+                "varejo": 1300.0,
+                "fob": 130.0,
+                "cif": 155.0,
+                "atacado": 201.0
+            }
+        }
     ],
 }

@@ -6,11 +6,12 @@
 /listaProduto/preco
 /listaPais/nome
 /listaPais/PIB
+/listaPais/capital/nome
 /id
 
 [ordenacao]
 /listaPais /nome
-/listaProduto /nome
+/listaProduto /nome /preco/varejo /preco/fob /preco/cif /preco/atacado
 
 [identificacaoElementoLista]
 /listaPais /nome
