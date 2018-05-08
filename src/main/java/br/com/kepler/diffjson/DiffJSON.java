@@ -222,6 +222,11 @@ public class DiffJSON {
                         ja.put( ((JSONObject)objA).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objA).get(identificacaoElementoListaParaPrexifo) : JSONObject.NULL);
                         ja.put( ((JSONObject)objB).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objB).get(identificacaoElementoListaParaPrexifo) :JSONObject.NULL);
                         jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
+                    } else {
+                        JSONArray ja = new JSONArray();
+                        ja.put(new Integer(predecessor.y));
+                        ja.put(new Integer(predecessor.x));
+                        jsonDiffObject.put("posicaoLista", ja);
                     }
                 }
                 jsonDiffArrayLocal.put(jsonDiffObject);
@@ -236,6 +241,11 @@ public class DiffJSON {
                     JSONArray ja = new JSONArray();
                     ja.put(JSONObject.NULL);
                     ja.put( ((JSONObject)objB).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objB).get(identificacaoElementoListaParaPrexifo) : JSONObject.NULL);
+                    jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
+                } else {
+                    JSONArray ja = new JSONArray();
+                    ja.put(JSONObject.NULL);
+                    ja.put(new Integer(predecessor.x));
                     jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
                 }
                 JSONArray ja = new JSONArray();
@@ -255,7 +265,13 @@ public class DiffJSON {
                     ja.put( ((JSONObject)objA).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objA).get(identificacaoElementoListaParaPrexifo) : JSONObject.NULL);
                     ja.put(JSONObject.NULL);
                     jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
+                } else {
+                    JSONArray ja = new JSONArray();
+                    ja.put(new Integer(predecessor.y));
+                    ja.put(JSONObject.NULL);
+                    jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
                 }
+
                 JSONArray ja = new JSONArray();
                 ja.put(JSONObject.NULL);
                 ja.put(arrayA.get(predecessor.y));
