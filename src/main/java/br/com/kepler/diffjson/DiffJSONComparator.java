@@ -22,6 +22,11 @@ public class DiffJSONComparator implements Comparator<Object>  {
                 Object oo1 = listaValor1.get(i);
                 Object oo2 = listaValor2.get(i);
 
+                if (oo1 == null && oo2 == null) continue;
+                if (oo1 == null && oo2 != null) return  1;
+                if (oo1 != null && oo2 == null) return -1;
+
+
                 if (oo1.getClass() != oo2.getClass()) throw new Exception("Nao eh possivel comparar " + oo1 + " and " + oo2 + " pois possum tipos diferentes");
 
                 if (oo1 instanceof JSONString) {

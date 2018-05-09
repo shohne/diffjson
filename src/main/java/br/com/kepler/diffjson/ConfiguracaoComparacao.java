@@ -50,16 +50,25 @@ public class ConfiguracaoComparacao {
             else if (secaoAtual == SECAO_ORDENACAO) {
                 String sOrdenacao[] = s.split("\\s+");
                 ArrayList<String> ordenacao = new ArrayList<String>();
-                for (int j=0; j<sOrdenacao.length; j++) ordenacao.add(sOrdenacao[j]);
+                for (int j=0; j<sOrdenacao.length; j++) {
+                    String ss = sOrdenacao[j];
+                    if (j == 0 && ss != null && !ss.startsWith("/")) ss = "/" + ss;
+                    ordenacao.add(ss);
+                }
                 resultado.ordenacao.add(ordenacao);
             }
             else if (secaoAtual == SECAO_COMPARACAO) {
+                if (!s.startsWith("/")) s = "/" + s;
                 resultado.comparacao.add(s);
             }
             else if (secaoAtual == SECAO_INDENTIFICACAO_ELEMENTO_LISTA) {
                 String sIdentificacaoElementoLista[] = s.split("\\s+");
                 ArrayList<String> identificacaoElementoLista = new ArrayList<String>();
-                for (int j=0; j<sIdentificacaoElementoLista.length; j++) identificacaoElementoLista.add(sIdentificacaoElementoLista[j]);
+                for (int j=0; j<sIdentificacaoElementoLista.length; j++) {
+                    String ss = sIdentificacaoElementoLista[j];
+                    if (j == 0 && ss != null && !ss.startsWith("/")) ss = "/" + ss;
+                    identificacaoElementoLista.add(ss);
+                }
                 resultado.identificacaoElementoLista.add(identificacaoElementoLista);
             }
             else {

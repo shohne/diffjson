@@ -1,21 +1,21 @@
 
 [comparacao]
-/dataNascimento
-/campo3/id
-/listaProduto/nome
-/listaProduto/preco
-/listaPais/nome
-/listaPais/PIB
-/listaPais/capital/nome
-/id
+dataNascimento
+campo3/id
+listaProduto/nome
+listaProduto/preco
+listaPais/nome
+listaPais/PIB
+listaPais/capital/nome
+id
 
 [ordenacao]
-/listaPais /nome
-/listaProduto /nome /preco/varejo /preco/fob /preco/cif /preco/atacado
+listaPais nome
+listaProduto nome preco/varejo preco/fob preco/cif preco/atacado preco/transferencia
 
 [identificacaoElementoLista]
-/listaPais /nome
-/listaProduto /nome
+listaPais nome
+listaProduto nome
 
 
 

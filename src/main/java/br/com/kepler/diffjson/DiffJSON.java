@@ -372,6 +372,7 @@ public class DiffJSON {
                 HashMap<Object, Integer>  mapListaCampoOrdenacaoXPosicaoLista= new HashMap<Object,Integer>();
                 for (int i=0; i<jsonArray.length(); i++) {
                     List<Object> valorCampoOrdenacao = getValorCampoOrdenacao((JSONObject)jsonArray.get(i), listaCampoOrdenacao);
+                    valorCampoOrdenacao.add(new Integer(i));
                     mapListaCampoOrdenacaoXPosicaoLista.put(valorCampoOrdenacao, new Integer(i));
                 }
 
@@ -409,10 +410,16 @@ public class DiffJSON {
        List<Object> result = new ArrayList<Object>();        
        for (int i=0; i<listaCampoOrdenacao.size(); i++) {
             String sPathCampo = listaCampoOrdenacao.get(i);
+            if (sPathCampo != null && sPathCampo.startsWith("/")) sPathCampo = sPathCampo.substring(1);
             String pathCampo[] = sPathCampo.split("/");
             Object js = jsonObj;
-            for (int j=1; j<pathCampo.length; j++) {
+            int j;
+            for (j=0; j<pathCampo.length; j++) {
                 String campo = pathCampo[j];
+                if (js == null || (js instanceof JSONObject) == false || ((JSONObject)js).has(campo)==false )  {
+                    js = null;
+                    break;
+                }
                 js = ((JSONObject)js).get(campo);
             }
             result.add(js);
