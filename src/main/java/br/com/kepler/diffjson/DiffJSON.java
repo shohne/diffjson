@@ -219,7 +219,8 @@ public class DiffJSON {
                         ja.put( ((JSONObject)objA).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objA).get(identificacaoElementoListaParaPrexifo) : JSONObject.NULL);
                         ja.put( ((JSONObject)objB).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objB).get(identificacaoElementoListaParaPrexifo) :JSONObject.NULL);
                         jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
-                    } else {
+                    } 
+                    {
                         JSONArray ja = new JSONArray();
                         ja.put(new Integer(predecessor.y));
                         ja.put(new Integer(predecessor.x));
@@ -239,11 +240,12 @@ public class DiffJSON {
                     ja.put(JSONObject.NULL);
                     ja.put( ((JSONObject)objB).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objB).get(identificacaoElementoListaParaPrexifo) : JSONObject.NULL);
                     jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
-                } else {
+                } 
+                {
                     JSONArray ja = new JSONArray();
                     ja.put(JSONObject.NULL);
                     ja.put(new Integer(predecessor.x));
-                    jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
+                    jsonDiffObject.put("posicaoLista", ja);
                 }
                 JSONArray ja = new JSONArray();
                 ja.put(JSONObject.NULL);
@@ -262,11 +264,12 @@ public class DiffJSON {
                     ja.put( ((JSONObject)objA).has(identificacaoElementoListaParaPrexifo) ? ((JSONObject)objA).get(identificacaoElementoListaParaPrexifo) : JSONObject.NULL);
                     ja.put(JSONObject.NULL);
                     jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
-                } else {
+                }
+                {
                     JSONArray ja = new JSONArray();
                     ja.put(new Integer(predecessor.y));
                     ja.put(JSONObject.NULL);
-                    jsonDiffObject.put(identificacaoElementoListaParaPrexifo, ja);
+                    jsonDiffObject.put("posicaoLista", ja);
                 }
 
                 JSONArray ja = new JSONArray();
@@ -359,6 +362,11 @@ public class DiffJSON {
             return true;
         }
         return false;
+    }
+
+    public static Object orderLists(String conteudoArquivoConfiguracao, String prefix, Object obj) {
+        ConfiguracaoComparacao configuracaoComparacao = ConfiguracaoComparacao.buildFromString(conteudoArquivoConfiguracao);
+        return orderLists(configuracaoComparacao, prefix, obj);
     }
 
     public static Object orderLists(ConfiguracaoComparacao configuracaoComparacao, String prefix, Object obj) {
